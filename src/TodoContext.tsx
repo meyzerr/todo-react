@@ -27,7 +27,7 @@ type TodoContextValue = {
     addTodo: (title: string) => void;
     toggleTodo: (title: string) => void;
     deleteTodo: (title: string) => void;
-    cleatCompleted: (title: string) => void;
+    clearCompleted: (title: string) => void;
 };
 
 const TodoContext = createContext<TodoContextValue | null>(null);
@@ -113,7 +113,7 @@ export function TodoProvider({ children }: {children: ReactNode}) {
                 addTodo: (title: string) => dispatch({type:"add", title}),
                 toggleTodo: (id: string) => dispatch({type:"toggle", id}),
                 deleteTodo: (id: string) => dispatch({type:"delete", id}),
-                cleatCompleted: () => dispatch({type:"clearCompleted"}),
+                clearCompleted: () => dispatch({type:"clearCompleted"}),
             }
     }, [storageError, todos]);
     return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>
@@ -127,4 +127,6 @@ export function useTodos() {
     if(!context) {
         throw new Error("useTodos должен использоваться внутри TodoProvide")
     } 
+
+    return context;
 }
